@@ -8,14 +8,7 @@ export default class UserInput extends Component {
     super();
     this.state = {
       value: "",
-      co: 0,
-      no: 0,
-      n02: 0,
-      o3: 0,
-      so2: 0,
-      pm2_5: 0,
-      pm10: 0,
-      nh3: 0,
+      stats: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,17 +24,15 @@ export default class UserInput extends Component {
   };
 
   getData = async (coords) => {
-    console.log(coords);
     const api_call = await axios(
       `http://api.openweathermap.org/data/2.5/air_pollution?lat=${coords.lat}&lon=${coords.lng}&appid=${API_KEY_DATA}`
     );
 
     let obj = api_call.data.list[0].components;
-    let statsArr = [];
-    for (const chemical in obj) {
-      statsArr.push(obj[chemical]);
-    }
-    console.log(statsArr);
+
+    this.setState({
+      stats: obj,
+    });
   };
 
   handleChange(event) {
