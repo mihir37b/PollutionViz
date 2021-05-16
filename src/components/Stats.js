@@ -5,10 +5,9 @@ export default class Stats extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
-    this.dataset = [100, 200, 300, 400, 500];
   }
-  componentDidMount() {
-    console.log(this.props);
+
+  createGraph() {
     let size = 500;
     let svg = d3
       .select(this.myRef.current)
@@ -18,7 +17,7 @@ export default class Stats extends React.Component {
     let rect_width = 95;
     svg
       .selectAll("rect")
-      .data(this.dataset)
+      .data(this.props.stats)
       .enter()
       .append("rect")
       .attr("x", (d, i) => 5 + i * (rect_width + 5))
