@@ -1,22 +1,12 @@
 * {
-  background-color: peachpuff;
+  background-color: #f74848;
+  color: white;
+  text-align: center;
 }
 .main {
   margin: 70px auto;
-  width: 60%;
+  width: 65%;
   padding: 10px;
   text-align: center;
-  font-family: "Helvetica (sans-serif)";
-}
-/* 
-.city-search {
-  width: 55%;
-  padding-top: 60px;
-  padding-left: 30px;
-  margin: 0 250px;
-} */
-
-.active-pink-2 input[type="text"]:focus:not([readonly]) {
-  border-bottom: 1px solid #f48fb1;
-  box-shadow: 0 1px 0 0 #f48fb1;
+  size: 50px;
 }

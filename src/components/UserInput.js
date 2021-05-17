@@ -3,7 +3,7 @@ import "./UserInput.css";
 import axios from "axios";
 import { API_KEY_DATA, API_KEY_COORDS } from "../secrets";
 import { Bar } from "react-chartjs-2";
-import { MDBCol, MDBInput } from "mdbreact";
+import { TextField } from "@material-ui/core";
 
 export default class UserInput extends Component {
   constructor() {
@@ -56,7 +56,7 @@ export default class UserInput extends Component {
         labels: ["CO", "NH3", "NO", "NO2", "O3", "PM2_5", "PM10", "SO2"],
         datasets: [
           {
-            label: "μg/m3",
+            label: ["μg/m3"],
             data: this.state.stats,
             backgroundColor: [
               "green",
@@ -85,37 +85,46 @@ export default class UserInput extends Component {
   }
 
   render() {
+    //const textField = new MDCTextField(
+    document.querySelector(".mdc-text-field");
+
     return (
-      <div className="main">
-        <form onSubmit={this.handleSubmit}>
-          <div className="city-search">
-            <label>
-              <input
-                type="text"
-                name="city"
-                placeholder="Search By City"
-                value={this.state.value}
-                onChange={this.handleChange}
-              />
-            </label>
+      <div>
+        <h1>How's My Air?</h1>
+        <div className="main">
+          <form onSubmit={this.handleSubmit}>
+            <div className="city-search">
+              <label>
+                <TextField
+                  color="white"
+                  type="text"
+                  name="city"
+                  placeholder="Search By City"
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <TextField type="submit" value="Submit" />
+            </div>
+          </form>
 
-            <input type="submit" value="Submit" />
-          </div>
-        </form>
-
-        <h1>
-          {this.state.location ? "Air Quality In " + this.state.location : ""}
-        </h1>
-        <Bar
-          data={this.state.chartData}
-          options={{
-            legend: {
-              display: true,
-              position: true,
-            },
-          }}
-        />
-        <h3>{`Air Quality Index: ${this.state.aqi}`}</h3>
+          <h1>
+            {this.state.location ? `Air Quality In ${this.state.location}` : ""}
+          </h1>
+          <Bar
+            className={"bing"}
+            data={this.state.chartData}
+            options={{
+              legend: {
+                display: true,
+                position: true,
+              },
+            }}
+          />
+          <h3>
+            {this.state.aqi ? `Air Quality Index: ${this.state.aqi}` : ""}
+          </h3>
+        </div>
       </div>
     );
   }
