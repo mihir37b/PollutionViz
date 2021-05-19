@@ -2,11 +2,20 @@
   background-color: #f74848;
   color: white;
   text-align: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .main {
   margin: 70px auto;
-  width: 65%;
-  padding: 10px;
+  width: 63%;
+
   text-align: center;
   size: 50px;
+}
+
+.title {
+  margin-top: 70px;
+}
+.city-search {
+  margin-bottom: 90px;
 }

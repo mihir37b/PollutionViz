@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import "./UserInput.css";
 import axios from "axios";
 import { API_KEY_DATA, API_KEY_COORDS } from "../secrets";
-import { Bar } from "react-chartjs-2";
-import { TextField } from "@material-ui/core";
+import { Bar, defaults } from "react-chartjs-2";
+import { Link, TextField } from "@material-ui/core";
+import AqiInfo from "./AqiInfo";
 
 export default class UserInput extends Component {
   constructor() {
@@ -14,22 +15,27 @@ export default class UserInput extends Component {
       chartData: {},
       location: "",
       aqi: 0,
+      show: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.myRef = React.createRef();
+    defaults.animation = false;
   }
 
   getCoords = async (city) => {
     const latNlong = await axios(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${API_KEY_COORDS}`
     );
-
-    let coords = latNlong.data.results[0].geometry.location;
-    let location = latNlong.data.results[0].formatted_address;
-    this.setState({ location });
-
-    this.getData(coords);
+    if (latNlong.data.status !== "OK") {
+      this.setState({ location: "invalid" });
+      this.getData({ lat: 0, lng: 0 });
+    } else {
+      let coords = latNlong.data.results[0].geometry.location;
+      let location = latNlong.data.results[0].formatted_address;
+      this.setState({ location });
+      this.getData(coords);
+    }
   };
 
   getData = async (coords) => {
@@ -50,14 +56,15 @@ export default class UserInput extends Component {
   };
 
   getChartData() {
-    console.log(this.state.stats);
     this.setState({
       chartData: {
-        labels: ["CO", "NH3", "NO", "NO2", "O3", "PM2_5", "PM10", "SO2"],
+        labels: ["CO", "NH₃", "NO", "NO₂", "O₃", "PM₂.₅", "PM₁₀", "SO₂"],
+
         datasets: [
           {
             label: ["μg/m3"],
             data: this.state.stats,
+
             backgroundColor: [
               "green",
               "blue",
@@ -72,6 +79,10 @@ export default class UserInput extends Component {
         ],
       },
     });
+  }
+
+  showMore() {
+    this.setState({ show: !this.state.show });
   }
 
   handleChange(event) {
@@ -90,13 +101,13 @@ export default class UserInput extends Component {
 
     return (
       <div>
-        <h1>How's My Air?</h1>
+        <h1 className="title">How's My Air?</h1>
+        <div></div>
         <div className="main">
           <form onSubmit={this.handleSubmit}>
             <div className="city-search">
               <label>
                 <TextField
-                  color="white"
                   type="text"
                   name="city"
                   placeholder="Search By City"
@@ -108,22 +119,41 @@ export default class UserInput extends Component {
             </div>
           </form>
 
-          <h1>
-            {this.state.location ? `Air Quality In ${this.state.location}` : ""}
-          </h1>
-          <Bar
-            className={"bing"}
-            data={this.state.chartData}
-            options={{
-              legend: {
-                display: true,
-                position: true,
-              },
-            }}
-          />
-          <h3>
-            {this.state.aqi ? `Air Quality Index: ${this.state.aqi}` : ""}
-          </h3>
+          {this.state.location === "invalid" ? (
+            <h1>{"Please Enter Valid Location"}</h1>
+          ) : (
+            <div className="render">
+              <h2>
+                {this.state.location
+                  ? `Air Quality In ${this.state.location}`
+                  : ""}
+              </h2>
+              <Bar
+                data={this.state.chartData}
+                options={{
+                  legend: {
+                    display: true,
+                    position: true,
+                    responsive: false,
+                    fontColor: "white",
+                  },
+                }}
+              />
+              <h4>
+                {this.state.aqi ? `Air Quality Index: ${this.state.aqi}` : ""}
+              </h4>
+              <h6>
+                {this.state.aqi ? (
+                  <Link href="#" onClick={() => this.showMore()}>
+                    What's this?
+                  </Link>
+                ) : (
+                  ""
+                )}
+              </h6>
+              {this.state.show ? <AqiInfo></AqiInfo> : ""}
+            </div>
+          )}
         </div>
       </div>
     );
