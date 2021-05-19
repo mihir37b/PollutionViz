@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import "./UserInput.css";
 import axios from "axios";
 import { API_KEY_DATA, API_KEY_COORDS } from "../secrets";
-import { Bar, defaults } from "react-chartjs-2";
-import { Link, TextField } from "@material-ui/core";
+
+import { Link } from "@material-ui/core";
 import AqiInfo from "./AqiInfo";
+import Form from "./Form";
 
 import Graph from "./Graph";
 
@@ -13,19 +14,16 @@ export default class UserInput extends Component {
     super();
     this.state = {
       value: "",
-      stats: {},
+      stats: [263.69, 0.26, 13.88, 50.78, 0.25, 8.31, 8.97, 0.71],
       chartData: {},
-      location: "",
+      location: "Poughkeepsie, NY",
       aqi: 0,
       show: false,
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.myRef = React.createRef();
-    defaults.animation = false;
   }
 
-  getCoords = async (city) => {
+  getCoords = async (city = "miami") => {
+    console.log(city);
     const latNlong = await axios(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${API_KEY_COORDS}`
     );
@@ -54,47 +52,11 @@ export default class UserInput extends Component {
       stats: stats,
       aqi: api_call.data.list[0].main.aqi,
     });
-    this.getChartData();
+    //   this.getChartData();
   };
-
-  getChartData() {
-    this.setState({
-      chartData: {
-        labels: ["CO", "NH₃", "NO", "NO₂", "O₃", "PM₂.₅", "PM₁₀", "SO₂"],
-
-        datasets: [
-          {
-            label: ["μg/m3"],
-            data: this.state.stats,
-
-            backgroundColor: [
-              "green",
-              "blue",
-              "red",
-              "black",
-              "orange",
-              "yellow",
-              "purple",
-              "pink",
-            ],
-          },
-        ],
-      },
-    });
-  }
 
   showMore() {
     this.setState({ show: !this.state.show });
-  }
-
-  handleChange(event) {
-    event.preventDefault();
-    this.setState({ value: event.target.value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    this.getCoords(event.target.city.value);
   }
 
   render() {
@@ -115,21 +77,7 @@ export default class UserInput extends Component {
         </div>
         <div></div>
         <div className="main">
-          <form onSubmit={this.handleSubmit}>
-            <div className="city-search">
-              <label>
-                <TextField
-                  type="text"
-                  name="city"
-                  placeholder="Search By City"
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                />
-              </label>
-              <TextField type="submit" value="Submit" />
-            </div>
-          </form>
-
+          <Form getCoords={this.getCoords} />
           {this.state.location === "invalid" ? (
             <h1>{"Please Enter Valid Location"}</h1>
           ) : (
@@ -139,7 +87,7 @@ export default class UserInput extends Component {
                   ? `Air Quality In ${this.state.location}`
                   : ""}
               </h2>
-              <Graph data={this.state.chartData} />
+              <Graph stats={this.state.stats} />
               <h4>
                 {this.state.aqi ? `Air Quality Index: ${this.state.aqi}` : ""}
               </h4>
@@ -152,11 +100,10 @@ export default class UserInput extends Component {
                   ""
                 )}
               </h6>
-              {/* {this.state.show ? <AqiInfo /> : ""} */}
+              {this.state.show ? <AqiInfo /> : ""}
             </div>
           )}
         </div>
-        <AqiInfo />
       </div>
     );
   }

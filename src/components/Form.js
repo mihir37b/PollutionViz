@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link, TextField } from "@material-ui/core";
-import getCoords from "./UserInput";
 
 export default class Form extends Component {
   constructor() {
