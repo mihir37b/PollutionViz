@@ -1,9 +1,10 @@
 import React from "react";
+import "./AqiInfo.css";
 
 export default function AqiInfo() {
   return (
-    <div>
-      <h4>
+    <div className="modal-container">
+      <p>
         Think of the AQI as a yardstick that runs from 0 to 500. The higher the
         AQI value, the greater the level of air pollution and the greater the
         health concern. For example, an AQI value of 50 or below represents good
@@ -19,7 +20,7 @@ export default function AqiInfo() {
         has a specific color. The color makes it easy for people to quickly
         determine whether air quality is reaching unhealthy levels in their
         communities.
-      </h4>
+      </p>
     </div>
   );
 }

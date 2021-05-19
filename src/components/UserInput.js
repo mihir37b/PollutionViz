@@ -6,6 +6,8 @@ import { Bar, defaults } from "react-chartjs-2";
 import { Link, TextField } from "@material-ui/core";
 import AqiInfo from "./AqiInfo";
 
+import Graph from "./Graph";
+
 export default class UserInput extends Component {
   constructor() {
     super();
@@ -101,7 +103,16 @@ export default class UserInput extends Component {
 
     return (
       <div>
-        <h1 className="title">How's My Air?</h1>
+        <div>
+          <h1 className="title">How's My Air?</h1>
+          <Link href="#" className="about">
+            About
+          </Link>
+          |
+          <Link href="#" className="feedback">
+            Feedback
+          </Link>
+        </div>
         <div></div>
         <div className="main">
           <form onSubmit={this.handleSubmit}>
@@ -128,17 +139,7 @@ export default class UserInput extends Component {
                   ? `Air Quality In ${this.state.location}`
                   : ""}
               </h2>
-              <Bar
-                data={this.state.chartData}
-                options={{
-                  legend: {
-                    display: true,
-                    position: true,
-                    responsive: false,
-                    fontColor: "white",
-                  },
-                }}
-              />
+              <Graph data={this.state.chartData} />
               <h4>
                 {this.state.aqi ? `Air Quality Index: ${this.state.aqi}` : ""}
               </h4>
@@ -151,10 +152,11 @@ export default class UserInput extends Component {
                   ""
                 )}
               </h6>
-              {this.state.show ? <AqiInfo></AqiInfo> : ""}
+              {/* {this.state.show ? <AqiInfo /> : ""} */}
             </div>
           )}
         </div>
+        <AqiInfo />
       </div>
     );
   }

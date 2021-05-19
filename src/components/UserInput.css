@@ -6,16 +6,19 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .main {
-  margin: 70px auto;
-  width: 63%;
-
+  margin: 0px auto;
+  width: 60%;
   text-align: center;
-  size: 50px;
+  size: 45px;
 }
 
 .title {
-  margin-top: 70px;
+  margin-top: 15px;
 }
 .city-search {
-  margin-bottom: 90px;
+  margin-top: 5px;
+  margin-bottom: 60px;
+}
+h6 {
+  margin-top: 0px;
 }
