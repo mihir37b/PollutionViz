@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import "./UserInput.css";
 import axios from "axios";
 import { API_KEY_DATA, API_KEY_COORDS } from "../secrets";
-
 import { Link } from "@material-ui/core";
-import AqiInfo from "./AqiInfo";
 import Form from "./Form";
-
+import Modal from "./Modal";
 import Graph from "./Graph";
+import Chemicals from "./Chemicals";
 
 export default class UserInput extends Component {
   constructor() {
@@ -22,7 +21,7 @@ export default class UserInput extends Component {
     };
   }
 
-  getCoords = async (city = "miami") => {
+  getCoords = async (city) => {
     console.log(city);
     const latNlong = await axios(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${API_KEY_COORDS}`
@@ -52,7 +51,6 @@ export default class UserInput extends Component {
       stats: stats,
       aqi: api_call.data.list[0].main.aqi,
     });
-    //   this.getChartData();
   };
 
   showMore() {
@@ -64,7 +62,7 @@ export default class UserInput extends Component {
     document.querySelector(".mdc-text-field");
 
     return (
-      <div>
+      <div className={`overlay-${this.state.show}`}>
         <div>
           <h1 className="title">How's My Air?</h1>
           <Link href="#" className="about">
@@ -75,7 +73,6 @@ export default class UserInput extends Component {
             Feedback
           </Link>
         </div>
-        <div></div>
         <div className="main">
           <Form getCoords={this.getCoords} />
           {this.state.location === "invalid" ? (
@@ -94,15 +91,19 @@ export default class UserInput extends Component {
               <h6>
                 {this.state.aqi ? (
                   <Link href="#" onClick={() => this.showMore()}>
-                    What's this?
+                    What's Air Quality Index?
                   </Link>
                 ) : (
                   ""
                 )}
               </h6>
-              {this.state.show ? <AqiInfo /> : ""}
+
+              {this.state.show ? <Modal /> : ""}
             </div>
           )}
+        </div>
+        <div className="chemicals">
+          <Chemicals />
         </div>
       </div>
     );

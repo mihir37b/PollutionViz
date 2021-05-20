@@ -9,6 +9,10 @@ export default class App extends Component {
   }
 
   render() {
-    return <UserInput />;
+    return (
+      <div className="front">
+        <UserInput />
+      </div>
+    );
   }
 }

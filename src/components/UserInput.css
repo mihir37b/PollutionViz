@@ -1,19 +1,13 @@
-* {
-  background-color: #f74848;
-  color: white;
-  text-align: center;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
 .main {
-  margin: 0px auto;
+  margin: 30px auto;
   width: 60%;
   text-align: center;
   size: 45px;
 }
 
 .title {
-  margin-top: 15px;
+  margin-top: 55px;
+  margin-bottom: 35px;
 }
 .city-search {
   margin-top: 5px;
@@ -21,4 +15,7 @@
 }
 h6 {
   margin-top: 0px;
+}
+.chemicals {
+  margin-top: 155px;
 }
