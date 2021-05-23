@@ -13,9 +13,9 @@ export default class UserInput extends Component {
     super();
     this.state = {
       value: "",
-      stats: [263.69, 0.26, 13.88, 50.78, 0.25, 8.31, 8.97, 0.71],
+      stats: [],
       chartData: {},
-      location: "Poughkeepsie, NY",
+      location: "",
       aqi: 0,
       show: false,
     };
@@ -53,7 +53,7 @@ export default class UserInput extends Component {
     });
   };
 
-  showMore() {
+  openModal() {
     this.setState({ show: !this.state.show });
   }
 
@@ -75,6 +75,7 @@ export default class UserInput extends Component {
         </div>
         <div className="main">
           <Form getCoords={this.getCoords} />
+
           {this.state.location === "invalid" ? (
             <h1>{"Please Enter Valid Location"}</h1>
           ) : (
@@ -84,13 +85,13 @@ export default class UserInput extends Component {
                   ? `Air Quality In ${this.state.location}`
                   : ""}
               </h2>
-              <Graph stats={this.state.stats} />
+              {this.state.stats > 0 ? <Graph stats={this.state.stats} /> : ""}
               <h4>
                 {this.state.aqi ? `Air Quality Index: ${this.state.aqi}` : ""}
               </h4>
               <h6>
                 {this.state.aqi ? (
-                  <Link href="#" onClick={() => this.showMore()}>
+                  <Link href="#" onClick={() => this.openModal()}>
                     What's Air Quality Index?
                   </Link>
                 ) : (
@@ -102,8 +103,9 @@ export default class UserInput extends Component {
             </div>
           )}
         </div>
+
         <div className="chemicals">
-          <Chemicals />
+          <Chemicals stats={this.state.stats} />
         </div>
       </div>
     );
