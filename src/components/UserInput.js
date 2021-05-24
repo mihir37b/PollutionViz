@@ -40,7 +40,7 @@ export default class UserInput extends Component {
 
   getData = async (coords) => {
     const api_call = await axios(
-      `http://api.openweathermap.org/data/2.5/air_pollution?lat=${coords.lat}&lon=${coords.lng}&appid=${REACT_APP_API_KEY_DATA}`
+      `https://api.openweathermap.org/data/2.5/air_pollution?lat=${coords.lat}&lon=${coords.lng}&appid=${REACT_APP_API_KEY_DATA}`
     );
 
     let obj = api_call.data.list[0].components;
