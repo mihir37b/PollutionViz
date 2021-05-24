@@ -69,7 +69,7 @@ export default function Chemicals(props) {
   const classes = useStyles();
   return (
     <div>
-      {props.stats > 0 ? (
+      {props.stats.length > 0 ? (
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="caption table">
             <caption>A basic table example with a caption</caption>
