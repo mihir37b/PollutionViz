@@ -16,3 +16,8 @@
 .text {
   background-color: #c63a3a;
 }
+
+.options {
+  background-color: #c63a3a;
+  padding: 10px;
+}

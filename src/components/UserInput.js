@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import "./UserInput.css";
 import axios from "axios";
 // import { REACT_APP_API_KEY_DATA, REACT_APP_API_KEY_COORDS } from "/../env";
@@ -22,7 +22,6 @@ export default class UserInput extends Component {
     };
     console.log(process.env);
   }
-
   getCoords = async (city) => {
     const latNlong = await axios(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=${REACT_APP_API_KEY_COORDS}`
@@ -67,11 +66,11 @@ export default class UserInput extends Component {
       <div className={`overlay-${this.state.show}`}>
         <div>
           <h1 className="title">How's My Air?</h1>
-          <Link href="#" className="about">
+          <Link href="/about" className="learn-more">
             About
           </Link>
-          |
-          <Link href="#" className="feedback">
+
+          <Link href="#" className="learn-more">
             Feedback
           </Link>
         </div>
@@ -105,7 +104,11 @@ export default class UserInput extends Component {
                 )}
               </h6>
 
-              {this.state.show ? <Modal /> : ""}
+              {this.state.show ? (
+                <Modal openModal={() => this.openModal()} />
+              ) : (
+                ""
+              )}
             </div>
           )}
         </div>
