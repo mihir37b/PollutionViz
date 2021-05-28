@@ -7,6 +7,7 @@ import Form from "./Form";
 import Modal from "./Modal";
 import Graph from "./Graph";
 import Chemicals from "./Chemicals";
+import { Slide } from "react-reveal";
 import dotenv from "dotenv";
 const { REACT_APP_API_KEY_DATA, REACT_APP_API_KEY_COORDS } = process.env;
 
@@ -59,8 +60,6 @@ export default class UserInput extends Component {
   }
 
   render() {
-    //console.log("hiii", REACT_APP_API_KEY_DATA);
-    //const textField = new MDCTextField(
     document.querySelector(".mdc-text-field");
 
     return (
@@ -84,10 +83,13 @@ export default class UserInput extends Component {
                   : ""}
               </h2>
               {this.state.stats.length > 0 ? (
-                <Graph stats={this.state.stats} />
+                <Slide left>
+                  <Graph stats={this.state.stats} />
+                </Slide>
               ) : (
                 ""
               )}
+
               <h4 className="aqi">
                 {this.state.aqi ? `Air Quality Index: ${this.state.aqi}` : ""}
               </h4>
