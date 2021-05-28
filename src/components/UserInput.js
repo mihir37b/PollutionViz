@@ -9,6 +9,7 @@ import Graph from "./Graph";
 import Chemicals from "./Chemicals";
 import dotenv from "dotenv";
 const { REACT_APP_API_KEY_DATA, REACT_APP_API_KEY_COORDS } = process.env;
+
 export default class UserInput extends Component {
   constructor() {
     super();
@@ -69,10 +70,6 @@ export default class UserInput extends Component {
           <Link href="/about" className="learn-more">
             About
           </Link>
-
-          <Link href="#" className="learn-more">
-            Feedback
-          </Link>
         </div>
         <div className="main">
           <Form getCoords={this.getCoords} />
@@ -91,7 +88,7 @@ export default class UserInput extends Component {
               ) : (
                 ""
               )}
-              <h4>
+              <h4 className="aqi">
                 {this.state.aqi ? `Air Quality Index: ${this.state.aqi}` : ""}
               </h4>
               <h6>
